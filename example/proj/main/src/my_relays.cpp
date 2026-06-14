@@ -36,11 +36,13 @@ int my_relays_init(struct relays_service *service)
 	service->relays[0].state_open = false;
 	service->relays[1].state_open = false;
 
+	/* apply settings */
+	my_relays_refresh(service);
+
+	/* configure the rest */
 	service->relays[1].use_freq = true;
 	service->relays[1].freq_open = 800;
 	service->relays[1].freq_close = 800;
-
-
 
 	Serial.println("Success setup relays");
 
