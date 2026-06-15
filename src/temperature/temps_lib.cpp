@@ -87,7 +87,7 @@ uint8_t temps_lib_refresh(struct temps_service *service)
 
 
 /*
- * Convert fl_t to str
+ * Convert unsigned fl_t to str
  * Right-aligned buffer, replace all buffer items to ' ' before result
  *
  * @num - number for convert (10000 > num > 10)
@@ -117,7 +117,7 @@ uint8_t *temps_lib_convert(fl_t num, uint8_t buff[5], uint8_t is_float)
 	uint32_t tmp;
 	int data;
 
-	if ((num < 10) || (num >= 10000)) {
+	if (num >= 10000) {
 		buff[1] = 'e';
 		buff[2] = 'r';
 

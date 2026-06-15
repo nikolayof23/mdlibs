@@ -148,7 +148,7 @@
  * 255 mean 25.5, 777 mean 77.7, 1115 -> 111.5
  * maximum is 6553.6
  */
-typedef uint16_t fl_t;
+typedef uint16_t fl_t;	/* unsigned */
 
 
 #ifdef TEMPS_USE_DS18B20
