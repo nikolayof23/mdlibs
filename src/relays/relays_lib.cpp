@@ -31,10 +31,22 @@ static int set_relay(struct relay *relay, bool state)
 
 int relays_lib_refresh_relay(struct relay *relay)
 {
-	if (!relay->use_freq && RELAY_CHANGED(relay)) {
+	/**
+	 * If the user changes the 'state_open' field, we disable the frequency
+	 * so that the next time this function is entered, it does not turn on
+	 * the relay, since 'state_open == _real_state'
+	 */
+	if (RELAY_CHANGED(relay)) {
+		relay->use_freq = false;
 		return set_relay(relay, relay->state_open);
-	} else if (relay->use_freq) {
+	}
+
+	if (relay->use_freq) {
 		uint32_t diff;
+
+		if ((relay->state_open && (relay->freq_close == 0)) ||
+		   (!relay->state_open && (relay->freq_open == 0)))
+			return;
 
 		diff = millis() - relay->timer;
 		if (relay->state_open && (diff >= relay->freq_open))
